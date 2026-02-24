@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e5e234cf-3991-4d2a-a1f8-c98c3b123582" name="Changes" comment="git commit --allow-empty -m &quot;Initial commit of orphan branch&quot;">
-      <change afterPath="$PROJECT_DIR$/HomeWork2.1/pom.xml" afterDir="false" />
-    </list>
+    <list default="true" id="e5e234cf-3991-4d2a-a1f8-c98c3b123582" name="Changes" comment="попытка" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -72,7 +70,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "HomeWork1.1",
+    "git-widget-placeholder": "#2 on Lesson__2.2",
     "kotlin-language-version-configured": "true",
     "onboarding.tips.debug.path": "C:/Users/user/IdeaProjects/Aston-Homework/HomeWork2.1/src/main/java/org/example/Main.java",
     "project.structure.last.edited": "Modules",
@@ -145,7 +143,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="HomeWork1.1" />
+                        <option value="Lesson_2.2" />
                       </list>
                     </value>
                   </entry>
