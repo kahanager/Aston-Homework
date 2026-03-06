@@ -21,7 +21,7 @@ public class Main {
         Student.printAllStudents(studentList);
 
 
-        Student.removePoorStudents(studentList);
+        Student.removeStudents(studentList);
         System.out.println("=== После удаления неуспевающих (ср.балл < 3) ===");
         Student.printAllStudents(studentList);
 

@@ -17,7 +17,7 @@ public class Student {
         this.avaragePoint = avaragePoint;
     }
     // Удаление студентов со средним баллом < 3
-    public static void removePoorStudents(Collection<Student> students) {
+    public static void removeStudents(Collection<Student> students) {
         students.removeIf(s -> s.avaragePoint < 3.0);
     }
     // Перевод на следующий курс при среднем балле >= 3
