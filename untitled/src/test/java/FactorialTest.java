@@ -6,6 +6,7 @@ import java.math.BigInteger;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+
 public class FactorialTest {
     @Test
     void testFactorialOfZero() {
@@ -18,7 +19,12 @@ public class FactorialTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"2, 2", "3, 6", "4, 24" })
+    @CsvSource({
+            "2, 2",
+            "3, 6",
+            "4, 24",
+            "5, 120"
+    })
     void testFactorialOfPositiveNumbers(int input, int expected) {
         assertEquals(BigInteger.valueOf(expected), Factorial.factorial(input));
     }
