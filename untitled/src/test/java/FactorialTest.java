@@ -1,5 +1,3 @@
-package org.example;
-
 import org.example.Factorial;
 import org.junit.jupiter.api.Test;
 
