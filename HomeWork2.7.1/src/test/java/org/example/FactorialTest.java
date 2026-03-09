@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.Factorial;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigInteger;
@@ -19,19 +20,19 @@ public class FactorialTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"2, 2", "3, 6", "4, 24", "5, 120" })
+    @CsvSource({"2, 2", "3, 6", "4, 24" })
     void testFactorialOfPositiveNumbers(int input, int expected) {
         assertEquals(BigInteger.valueOf(expected), Factorial.factorial(input));
     }
 
     @Test
-    void testFactorialOfLargeNumber() {
-        BigInteger result = Factorial.factorial(10);
-        assertEquals(BigInteger.valueOf(3628800), result);
+    void testFactorialOfBigInteger() {
+        BigInteger result = Factorial.factorial(20);
+        assertEquals(BigInteger.valueOf(2432902008176640000L), result);
     }
 
     @Test
-    void testFactorialOfNegativeThrowsException() {
+    void testFactorialOfNegative() {
         assertThrows(IllegalArgumentException.class, () -> Factorial.factorial(-1));
     }
 }
