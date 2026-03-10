@@ -5,7 +5,7 @@ import java.math.BigInteger;
 public class Factorial {
     public static BigInteger factorial(int n) {
         if (n < 0) {
-            throw new IllegalArgumentException("Факториал отрицательного числа не определён");
+            throw new IllegalArgumentException("Факториала отрицательного числа нет");
         }
         BigInteger result = BigInteger.ONE;
         for (int i = 2; i <= n; i++) {
