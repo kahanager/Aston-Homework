@@ -13,17 +13,20 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class FactorialTest {
     @Test
     void testFactorial1() {
+
         assertEquals(BigInteger.ONE, Factorial.factorial(0));
     }
 
     @Test
     void testFactorial2() {
+
         assertEquals(BigInteger.ONE, Factorial.factorial(1));
     }
 
     @ParameterizedTest
-    @CsvSource({"2, 2", "3, 6", "4, 24"})
+    @CsvSource({"1, 1", "3, 6", "4, 24"})
     void testFactorial3(int input, int out) {
+
         assertEquals(BigInteger.valueOf(out), Factorial.factorial(input));
     }
 
@@ -35,6 +38,7 @@ public class FactorialTest {
 
     @Test
     void testFactorial5() {
+
         assertThrows(IllegalArgumentException.class, () -> Factorial.factorial(-1));
     }
 }
