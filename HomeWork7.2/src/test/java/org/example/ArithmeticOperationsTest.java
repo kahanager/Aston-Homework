@@ -1,40 +1,68 @@
 package org.example;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 import static org.example.ArithmeticOperations.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+
 
 public class ArithmeticOperationsTest {
-    @ParameterizedTest
-    @CsvSource({"1, 2, 3", "0, 0, 0", "-1, 100, 99"})
-    void testAddition(int inputA, int inputB, int out) {
+
+    @DataProvider(name = "addObject")
+    public Object[][] addObject() {
+        return new Object[][]{
+                {1, 2, 3},
+                {0, 0, 0},
+                {-1, 100, 99}
+        };
+    }
+    @Test(dataProvider = "addObject")
+    public void testAddition(int inputA, int inputB, int out) {
         assertEquals(addition(inputA, inputB), out);
     }
 
-    @ParameterizedTest
-    @CsvSource({"4, 2, 2", "0, 0, 0", "-1, 100, -101"})
-    void testSubtract(int inputA, int inputB, int out) {
+    @DataProvider(name = "subObject")
+    public Object[][] subObject() {
+        return new Object[][]{
+                {4, 2, 2},
+                {0, 0, 0},
+                {-1, 100, -101}
+        };
+    }
+    @Test(dataProvider = "subObject")
+    public void testSubtract(int inputA, int inputB, int out) {
         assertEquals(subtract(inputA, inputB), out);
     }
 
-    @ParameterizedTest
-    @CsvSource({"2, 2, 4", "0, 4, 0", "-1, 100, -100"})
-    void testMultiply(int inputA, int inputB, int out) {
+    @DataProvider(name = "mulObject")
+    public Object[][] mulObject() {
+        return new Object[][]{
+                {2, 2, 4},
+                {0, 4, 0},
+                {-1, 100, -100}
+        };
+    }
+    @Test(dataProvider = "mulObject")
+    public void testMultiply(int inputA, int inputB, int out) {
         assertEquals(multiply(inputA, inputB), out);
     }
 
-    @ParameterizedTest
-    @CsvSource({"2, 2, 1", "0, 4, 0", "-100, 1, -100"})
-    void testDivide(int inputA, int inputB, int out) {
+    @DataProvider(name = "divObject")
+    public Object[][] divObject() {
+        return new Object[][]{
+                {2, 2, 1},
+                {0, 4, 0},
+                {-100, 1, -100}
+        };
+    }
+    @Test(dataProvider = "divObject")
+    public void testDivide(int inputA, int inputB, int out) {
         assertEquals(divide(inputA, inputB), out);
     }
 
-    @Test
-    void testDivideThrow() {
-        assertThrows(ArithmeticException.class,
-                () -> divide(1, 0));
+    @Test(expectedExceptions = ArithmeticException.class)
+    public void testDivideThrow() {
+        divide(1, 0);
     }
 }
