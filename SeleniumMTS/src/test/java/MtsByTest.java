@@ -12,7 +12,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MtsByTest {
     private WebDriver driver;
@@ -24,40 +23,24 @@ public class MtsByTest {
 
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
-        // Разворачиваем окно браузера на весь экран для корректного отображения элементов
-        driver.manage().window().maximize();
-
-        // Инициализируем явное ожидание с таймаутом 10 секунд
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-
-        // Загружаем главную страницу сайта mts.by
         driver.get("https://www.mts.by");
         cookieClose();
     }
 
-    /**
-     * Метод, выполняемый после каждого теста.
-     * Закрывает браузер и освобождает ресурсы.
-     */
     @AfterEach
-    public void tearDown() {
-        // Проверяем, что драйвер не null (чтобы избежать исключения)
-        if (driver != null) {
-            // Закрываем все окна браузера и завершаем процесс драйвера
-            driver.quit();
-        }
+    public void driverQuit() {
+        driver.quit();
     }
 
     private void cookieClose() {
         try {
             By cookieButtonLocator = By.xpath("//button[@id='cookie-agree']");
-            WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(5));
-            shortWait.until(ExpectedConditions.elementToBeClickable(cookieButtonLocator)).click();
+            wait.until(ExpectedConditions.elementToBeClickable(cookieButtonLocator)).click();
         } catch (Exception e) {
-            System.out.println("Cookie-баннер не найден или уже закрыт, продолжаем без обработки.");
+            System.out.println("Cookie-баннер не найден или уже закрыт");
         }
     }
-
 
     @Test
     public void testName() {
@@ -70,7 +53,6 @@ public class MtsByTest {
 
     @Test
     public void testLogos() {
-        // Массив локаторов для каждого логотипа
         By[] logoLocators = {
                 By.xpath("//img[@alt='Visa']"),
                 By.xpath("//img[@alt='Verified By Visa']"),
@@ -82,7 +64,7 @@ public class MtsByTest {
         for (int i = 0; i < logoLocators.length; i++) {
             By locator = logoLocators[i];
             try {
-                WebElement logo = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+                wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
             } catch (Exception e) {
                 System.out.println("Логотип не найден: " + locator + " – " + e.getClass().getSimpleName());
             }
@@ -94,7 +76,6 @@ public class MtsByTest {
         WebElement link = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(
                 "//div[@class='pay__wrapper']/a[@href]")));
         link.click();
-
         String currentUrl = driver.getCurrentUrl();
         String expectedUrl = "https://www.mts.by/help/poryadok-oplaty-i-bezopasnost-internet-platezhey/";
         assertEquals(expectedUrl, currentUrl, "URL после перехода не совпадает");
@@ -112,11 +93,14 @@ public class MtsByTest {
         sumField.click();
         sumField.sendKeys("499");
 
-        WebElement submitButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//form[@id='pay-connection']/button[@type='submit']")));
+        WebElement submitButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(
+                "//form[@id='pay-connection']/button[@type='submit']")));
         submitButton.click();
 
         WebElement iframe = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(
-                "//div[@class='app-wrapper__content ng-tns-c4113268976-0']")));
-
+                "//iframe[@class='payment-widget-iframe']")));
+        String expectedSrc = "https://checkout.bepaid.by/widget_v2/index.html";
+        String actualSrc = iframe.getAttribute("src");
+        assertEquals(expectedSrc, actualSrc, "Атрибут src iframe не соответствует ожидаемому");
     }
 }
