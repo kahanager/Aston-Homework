@@ -3,10 +3,14 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MtsByTest {
     private WebDriver driver;
@@ -36,8 +40,15 @@ public class MtsByTest {
     }
 
     @Test
+    public void testFieldsText() {
+
+    }
+
+    @Test
     public void testLogos() {
-        homePage.checkLogos();
+        List<By> missing = homePage.checkLogos();
+        assertTrue(missing.isEmpty(),
+                "Отсутствуют логотипы: " + missing);
     }
 
     @Test
@@ -54,5 +65,12 @@ public class MtsByTest {
         String actualSrc = paymentFrame.getIframeSrc();
         String expectedSrc = "https://checkout.bepaid.by/widget_v2/index.html";
         assertEquals(expectedSrc, actualSrc, "Атрибут src iframe не соответствует ожидаемому");
+    }
+
+    @Test
+    public void testTextFields() {
+        List<String> actualText = homePage.checkFieldsText();
+        List<String> expectedText = List.of("Номер телефона", "Номер абонента", "Номер счета на 44", "Номер счета на 2073");
+        assertEquals(expectedText, actualText);
     }
 }
