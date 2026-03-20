@@ -24,6 +24,7 @@ public class MtsByTest {
         driver = new ChromeDriver();
         driver.get("https://www.mts.by");
         homePage = new HomePage(driver);
+
         homePage.cookieClose();
     }
 
@@ -45,7 +46,7 @@ public class MtsByTest {
     }
 
     @Test
-    public void testLogos() {
+    public void testLogosHomePage() {
         List<By> missing = homePage.checkLogos();
         assertTrue(missing.isEmpty(),
                 "Отсутствуют логотипы: " + missing);
@@ -70,7 +71,42 @@ public class MtsByTest {
     @Test
     public void testTextFields() {
         List<String> actualText = homePage.checkFieldsText();
-        List<String> expectedText = List.of("Номер телефона", "Номер абонента", "Номер счета на 44", "Номер счета на 2073");
+        List<String> expectedText = List.of(
+                "Номер телефона", "Номер абонента", "Номер счета на 44", "Номер счета на 2073");
         assertEquals(expectedText, actualText);
     }
+    @Test
+    public void testPaySum() {
+        PaymentFrame paymentFrame = homePage.proceedPayment("297777777", "499");
+        String paySum = "499";
+        String titleSum = paymentFrame.getTitlePaySum();
+        String buttonSum = paymentFrame.getButtonPaySum();
+        String textSum = paymentFrame.getTextPaySum();
+        assertTrue(titleSum.contains(paySum + " ") || titleSum.contains(paySum + ".00"));
+        assertTrue(buttonSum.contains(" " + paySum + " ") || buttonSum.contains(" " + paySum + ".00"));
+        assertTrue(textSum.contains(" " + paySum + " ") || textSum.contains(" " + paySum + ".00"));
+    }
+    @Test
+    public void testPhoneNumber() {
+        PaymentFrame paymentFrame = homePage.proceedPayment("297777777", "499");
+        String expectedNumber = "375297777777";
+        String actualNumber = paymentFrame.getPhoneNumber();
+        assertTrue(actualNumber.contains(expectedNumber));
+    }
+    @Test
+    public void testLogosPaymentPrame() {
+        PaymentFrame paymentFrame = homePage.proceedPayment("297777777", "499");
+        List<By> missing = paymentFrame.checkLogos();
+        assertTrue(missing.isEmpty(),
+                "Отсутствуют логотипы: " + missing);
+    }
+    @Test
+    public void testTextFieldsPaymentPrame() {
+        PaymentFrame paymentFrame = homePage.proceedPayment("297777777", "499");
+        List<String> actualText = paymentFrame.checkFieldsText();
+        List<String> expectedText = List.of(
+                "Номер карты", "Срок действия", "CVC", "Имя и фамилия на карте");
+        assertEquals(expectedText, actualText);
+    }
+
 }

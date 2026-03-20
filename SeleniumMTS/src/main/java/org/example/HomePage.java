@@ -89,9 +89,10 @@ public class HomePage extends BasePage{
 
     public List<String> checkFieldsText() {
         List<String> resultList = new ArrayList<>();
-        WebElement linkArrow = wait.until(ExpectedConditions.elementToBeClickable(
-                selectArrowLocator));
+
         for (int i = 0; i < selectOptionLocators.length; i++) {
+            WebElement linkArrow = wait.until(ExpectedConditions.elementToBeClickable(
+                    selectArrowLocator));
             linkArrow.click();
             WebElement linkOptions = wait.until(ExpectedConditions.elementToBeClickable(
                     selectOptionLocators[i]));
@@ -103,4 +104,6 @@ public class HomePage extends BasePage{
         }
         return resultList;
     }
+
+
 }
